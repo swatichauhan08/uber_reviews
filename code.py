@@ -67,44 +67,44 @@ uber_review = data.copy()
 
 doc0_df = []
 # define unit func to process one doc
-def vader_unit_func(doc0):
-    sents_list0 = sent_tokenize(doc0)
-    vs_doc0 = []
-    sent_df = []
-    for i in range(len(sents_list0)):
-        vs_sent0 = analyzer.polarity_scores(sents_list0[i])
-        vs_doc0.append(vs_sent0)
-        sent_ind.append(i)
+# def vader_unit_func(doc0):
+ #   sents_list0 = sent_tokenize(doc0)
+ #   vs_doc0 = []
+ #   sent_df = []
+ #   for i in range(len(sents_list0)):
+ #       vs_sent0 = analyzer.polarity_scores(sents_list0[i])
+ #       vs_doc0.append(vs_sent0)
+ #       sent_ind.append(i)
         
-    doc0_df = pd.DataFrame(vs_doc0)
-    doc0_df.insert(0, 'sent_index', sent_ind)  # insert sent index
-    doc0_df.insert(doc0_df.shape[1], 'sentence', sents_list0)
-    return(doc0_df)
+  #  doc0_df = pd.DataFrame(vs_doc0)
+  #  doc0_df.insert(0, 'sent_index', sent_ind)  # insert sent index
+  #  doc0_df.insert(doc0_df.shape[1], 'sentence', sents_list0)
+  #  return(doc0_df)
 
-%time doc0_df = vader_unit_func(uber_review['0'])
-doc0_df
+#%time doc0_df = vader_unit_func(uber_review['0'])
+#doc0_df
 # define wrapper func
-def vader_wrap_func(corpus0):
+#def vader_wrap_func(corpus0):
     
-    # use ifinstance() to check & convert input to DF
-    if isinstance(corpus0, list):
-        corpus0 = pd.DataFrame({'text':corpus0})
+ #   # use ifinstance() to check & convert input to DF
+  #  if isinstance(corpus0, list):
+   #     corpus0 = pd.DataFrame({'text':corpus0})
     
     # define empty DF to concat unit func output to
-    vs_df = pd.DataFrame(columns=['doc_index', 'sent_index', 'neg', 'neu', 'pos', 'compound', 'sentence'])    
+  #  vs_df = pd.DataFrame(columns=['doc_index', 'sent_index', 'neg', 'neu', 'pos', 'compound', 'sentence'])    
     
-    # apply unit-func to each doc & loop over all docs
-    for i1 in range(len(corpus0)):
-        doc0 = str(corpus0.text.iloc[i1])
-        vs_doc_df = vader_unit_func(doc0)  # applying unit-func
-        vs_doc_df.insert(0, 'doc_index', i1)  # inserting doc index
-        vs_df = pd.concat([vs_df, vs_doc_df], axis=0)
+  #  # apply unit-func to each doc & loop over all docs
+ #   for i1 in range(len(corpus0)):
+  #      doc0 = str(corpus0.text.iloc[i1])
+  #      vs_doc_df = vader_unit_func(doc0)  # applying unit-func
+  #      vs_doc_df.insert(0, 'doc_index', i1)  # inserting doc index
+  #      vs_df = pd.concat([vs_df, vs_doc_df], axis=0)
         
-    return(vs_df)
+  #  return(vs_df)
 
 # test-drive wrapper func
-%time uber_vs_df = vader_wrap_func(uber_review)   
-uber_vs_df
+#%time uber_vs_df = vader_wrap_func(uber_review)   
+#uber_vs_df
 # load nltk's English stopwords as variable called 'stopwords'
 stopwords = nltk.corpus.stopwords.words('english')
 
